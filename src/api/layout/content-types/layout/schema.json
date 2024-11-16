@@ -1,0 +1,75 @@
+{
+  "kind": "collectionType",
+  "collectionName": "layouts",
+  "info": {
+    "singularName": "layout",
+    "pluralName": "layouts",
+    "displayName": "Layout",
+    "description": "Screen layout configurations for content display"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "layoutType": {
+      "type": "enumeration",
+      "enum": [
+        "full",
+        "split-2-horizontal",
+        "split-2-vertical",
+        "split-3",
+        "split-4",
+        "custom"
+      ],
+      "default": "full",
+      "required": true
+    },
+    "zones": {
+      "type": "json",
+      "required": true,
+      "description": "Zone configurations including positions and sizes"
+    },
+    "thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "aspectRatio": {
+      "type": "enumeration",
+      "enum": [
+        "ratio_16_9",
+        "ratio_4_3",
+        "ratio_1_1",
+        "ratio_9_16",
+        "custom"
+      ],
+      "default": "ratio_16_9",
+      "required": true
+    },
+    "customCss": {
+      "type": "text",
+      "description": "Custom CSS for layout customization"
+    },
+    "metadata": {
+      "type": "json",
+      "description": "Additional layout settings and information"
+    },
+    "playlists": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::playlist.playlist",
+      "mappedBy": "layout"
+    }
+  }
+}

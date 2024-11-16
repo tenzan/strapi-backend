@@ -1,0 +1,40 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/app-roles",
+      "handler": "app-role.find",
+      "config": {
+        "policies": [],
+        "auth": false
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/app-roles/:id",
+      "handler": "app-role.findOne",
+      "config": {
+        "policies": [],
+        "auth": false
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/app-roles/validate",
+      "handler": "app-role.validateToken",
+      "config": {
+        "policies": [],
+        "auth": false
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/app-roles/:id/refresh-token",
+      "handler": "app-role.refreshToken",
+      "config": {
+        "policies": [],
+        "auth": false
+      }
+    }
+  ]
+}

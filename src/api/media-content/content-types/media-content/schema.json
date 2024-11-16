@@ -1,0 +1,88 @@
+{
+  "kind": "collectionType",
+  "collectionName": "media_contents",
+  "info": {
+    "singularName": "media-content",
+    "pluralName": "media-contents",
+    "displayName": "Media Content",
+    "description": "Content items for digital signage including images, videos, text, and embeds"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "contentType": {
+      "type": "enumeration",
+      "enum": [
+        "image",
+        "video",
+        "text",
+        "embed"
+      ],
+      "required": true,
+      "default": "text"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "video": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "videos"
+      ]
+    },
+    "textContent": {
+      "type": "richtext"
+    },
+    "embedUrl": {
+      "type": "string",
+      "regex": "^(https?:\\/\\/)?(www\\.)?(youtube\\.com|youtu\\.be|vimeo\\.com|\\S+)\\S*$"
+    },
+    "duration": {
+      "type": "integer",
+      "min": 1,
+      "default": 10,
+      "required": true,
+      "description": "Duration in seconds to display the content"
+    },
+    "activeFrom": {
+      "type": "datetime"
+    },
+    "activeTo": {
+      "type": "datetime"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "active",
+        "draft",
+        "archived"
+      ],
+      "default": "draft",
+      "required": true
+    },
+    "priority": {
+      "type": "integer",
+      "default": 0,
+      "description": "Higher number means higher priority"
+    },
+    "metadata": {
+      "type": "json",
+      "description": "Additional settings specific to the content type"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "kind": "collectionType",
+  "collectionName": "app_roles",
+  "info": {
+    "singularName": "app-role",
+    "pluralName": "app-roles",
+    "displayName": "Application Role",
+    "description": "Customer roles for frontend application access"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "admin",
+        "editor",
+        "viewer"
+      ],
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "permissions": {
+      "type": "json",
+      "required": true,
+      "description": "List of permissions for this role"
+    },
+    "accessToken": {
+      "type": "string",
+      "private": true,
+      "unique": true
+    },
+    "lastAccess": {
+      "type": "datetime"
+    },
+    "customer": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::customer.customer",
+      "inversedBy": "role"
+    }
+  }
+}

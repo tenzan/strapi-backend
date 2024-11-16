@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_display_resolutions",
+  "info": {
+    "displayName": "Resolution",
+    "description": "Screen resolution specifications"
+  },
+  "options": {},
+  "attributes": {
+    "width": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "height": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "scale": {
+      "type": "decimal",
+      "default": 1,
+      "min": 0.1
+    }
+  }
+}

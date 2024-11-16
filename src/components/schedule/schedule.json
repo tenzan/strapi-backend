@@ -1,0 +1,48 @@
+{
+  "collectionName": "components_schedule_schedules",
+  "info": {
+    "displayName": "Schedule",
+    "description": "Scheduling configuration for playlists"
+  },
+  "options": {},
+  "attributes": {
+    "startDate": {
+      "type": "datetime"
+    },
+    "endDate": {
+      "type": "datetime"
+    },
+    "daysOfWeek": {
+      "type": "json",
+      "description": "Array of days when content should play (0-6, 0 is Sunday)"
+    },
+    "startTime": {
+      "type": "time",
+      "description": "Daily start time"
+    },
+    "endTime": {
+      "type": "time",
+      "description": "Daily end time"
+    },
+    "timezone": {
+      "type": "string",
+      "default": "UTC",
+      "description": "Timezone for the schedule"
+    },
+    "isRecurring": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the schedule repeats"
+    },
+    "frequency": {
+      "type": "enumeration",
+      "enum": [
+        "daily",
+        "weekly",
+        "monthly",
+        "custom"
+      ],
+      "description": "Frequency of recurring schedule"
+    }
+  }
+}

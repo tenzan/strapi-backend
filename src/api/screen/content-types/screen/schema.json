@@ -1,0 +1,76 @@
+{
+  "kind": "collectionType",
+  "collectionName": "screens",
+  "info": {
+    "singularName": "screen",
+    "pluralName": "screens",
+    "displayName": "Screen",
+    "description": "Digital signage display units"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "location": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "resolution": {
+      "type": "component",
+      "component": "display.resolution",
+      "required": true
+    },
+    "orientation": {
+      "type": "enumeration",
+      "enum": [
+        "portrait",
+        "landscape"
+      ],
+      "default": "landscape",
+      "required": true
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "active",
+        "inactive",
+        "maintenance"
+      ],
+      "default": "active",
+      "required": true
+    },
+    "lastPing": {
+      "type": "datetime"
+    },
+    "deviceId": {
+      "type": "string",
+      "unique": true
+    },
+    "metadata": {
+      "type": "json",
+      "description": "Additional screen settings and information"
+    },
+    "playlists": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::playlist.playlist",
+      "mappedBy": "screens"
+    },
+    "customer": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::customer.customer",
+      "inversedBy": "screens",
+      "required": true
+    }
+  }
+}

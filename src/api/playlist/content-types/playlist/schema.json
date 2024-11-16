@@ -1,0 +1,81 @@
+{
+  "kind": "collectionType",
+  "collectionName": "playlists",
+  "info": {
+    "singularName": "playlist",
+    "pluralName": "playlists",
+    "displayName": "Playlist",
+    "description": "Content playlists for digital signage"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "screens": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::screen.screen",
+      "inversedBy": "playlists"
+    },
+    "layout": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::layout.layout",
+      "inversedBy": "playlists"
+    },
+    "playlistItems": {
+      "type": "component",
+      "component": "playlist.playlist-item",
+      "required": true,
+      "repeatable": true
+    },
+    "schedule": {
+      "type": "component",
+      "component": "schedule.schedule",
+      "required": true
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "active",
+        "inactive",
+        "scheduled"
+      ],
+      "default": "inactive",
+      "required": true
+    },
+    "priority": {
+      "type": "integer",
+      "default": 0,
+      "description": "Higher number means higher priority"
+    },
+    "loop": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the playlist should loop"
+    },
+    "transitionEffect": {
+      "type": "enumeration",
+      "enum": [
+        "none",
+        "fade",
+        "slide",
+        "zoom"
+      ],
+      "default": "fade"
+    },
+    "metadata": {
+      "type": "json",
+      "description": "Additional playlist settings and information"
+    }
+  }
+}

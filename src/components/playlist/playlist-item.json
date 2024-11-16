@@ -1,0 +1,41 @@
+{
+  "collectionName": "components_playlist_playlist_items",
+  "info": {
+    "displayName": "Playlist Item",
+    "description": "Individual items in a playlist with their zone assignments"
+  },
+  "options": {},
+  "attributes": {
+    "content": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::media-content.media-content"
+    },
+    "zoneId": {
+      "type": "string",
+      "required": true,
+      "description": "ID of the zone where this content should be displayed"
+    },
+    "order": {
+      "type": "integer",
+      "default": 0,
+      "description": "Playback order within the zone"
+    },
+    "duration": {
+      "type": "integer",
+      "min": 1,
+      "description": "Override default duration (in seconds)"
+    },
+    "transition": {
+      "type": "enumeration",
+      "enum": [
+        "default",
+        "none",
+        "fade",
+        "slide",
+        "zoom"
+      ],
+      "default": "default"
+    }
+  }
+}
