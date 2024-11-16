@@ -2220,7 +2220,7 @@
     yalc "1.0.0-pre.53"
     yup "0.32.9"
 
-"@strapi/types@5.4.0":
+"@strapi/types@5.4.0", "@strapi/types@^5.4.0":
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/@strapi/types/-/types-5.4.0.tgz#6ecb5b490b01544659e5b3d2d8d2dd7aa1307645"
   integrity sha512-jJoDQ6xRlzhWmP5KiqY23Rlpb0lkwcXMld8bQllYjKuoCSRavk87yOxZgJphPW5Wg3NPZWa+r1q4jhkzPo8wOw==
@@ -3340,6 +3340,15 @@ axios@1.7.4:
   version "1.7.4"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.7.4.tgz#4c8ded1b43683c8dd362973c393f3ede24052aa2"
   integrity sha512-DukmaFRnY6AzAALSH4J2M3k6PkaC+MfaAGdEERRWcC9q3/TWQwLpHR8ZRLKTdQ3aBDL64EdluRDjJqKw+BPZEw==
+  dependencies:
+    follow-redirects "^1.15.6"
+    form-data "^4.0.0"
+    proxy-from-env "^1.1.0"
+
+axios@^1.7.7:
+  version "1.7.7"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.7.7.tgz#2f554296f9892a72ac8d8e4c5b79c14a91d0a47f"
+  integrity sha512-S4kL7XrjgBmvdGut0sN3yJxqYzrDOnivkBiN0OFs6hLiUam3UPvswUo0kqGyhqUZGEOytHyumEdXsAkgCOUf3Q==
   dependencies:
     follow-redirects "^1.15.6"
     form-data "^4.0.0"
