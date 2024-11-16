@@ -398,6 +398,44 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiAppRoleAppRole extends Struct.CollectionTypeSchema {
+  collectionName: 'app_roles';
+  info: {
+    description: 'Customer roles for frontend application access';
+    displayName: 'Application Role';
+    pluralName: 'app-roles';
+    singularName: 'app-role';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    accessToken: Schema.Attribute.String &
+      Schema.Attribute.Private &
+      Schema.Attribute.Unique;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    customer: Schema.Attribute.Relation<'oneToOne', 'api::customer.customer'>;
+    description: Schema.Attribute.Text;
+    lastAccess: Schema.Attribute.DateTime;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::app-role.app-role'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    permissions: Schema.Attribute.JSON & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    type: Schema.Attribute.Enumeration<['admin', 'editor', 'viewer']> &
+      Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
   collectionName: 'articles';
   info: {
@@ -502,6 +540,49 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCustomerCustomer extends Struct.CollectionTypeSchema {
+  collectionName: 'customers';
+  info: {
+    description: 'Customer organizations for multi-tenancy';
+    displayName: 'Customer';
+    pluralName: 'customers';
+    singularName: 'customer';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    code: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    layouts: Schema.Attribute.Relation<'oneToMany', 'api::layout.layout'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::customer.customer'
+    > &
+      Schema.Attribute.Private;
+    mediaContents: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::media-content.media-content'
+    >;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    playlists: Schema.Attribute.Relation<'oneToMany', 'api::playlist.playlist'>;
+    publishedAt: Schema.Attribute.DateTime;
+    role: Schema.Attribute.Relation<'oneToOne', 'api::app-role.app-role'>;
+    screens: Schema.Attribute.Relation<'oneToMany', 'api::screen.screen'>;
+    settings: Schema.Attribute.JSON;
+    status: Schema.Attribute.Enumeration<['active', 'inactive', 'trial']> &
+      Schema.Attribute.DefaultTo<'trial'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   collectionName: 'globals';
   info: {
@@ -528,6 +609,218 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     siteDescription: Schema.Attribute.Text & Schema.Attribute.Required;
     siteName: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiLayoutLayout extends Struct.CollectionTypeSchema {
+  collectionName: 'layouts';
+  info: {
+    description: 'Screen layout configurations for content display';
+    displayName: 'Layout';
+    pluralName: 'layouts';
+    singularName: 'layout';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    aspectRatio: Schema.Attribute.Enumeration<
+      ['ratio_16_9', 'ratio_4_3', 'ratio_1_1', 'ratio_9_16', 'custom']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'ratio_16_9'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    customCss: Schema.Attribute.Text;
+    description: Schema.Attribute.Text;
+    layoutType: Schema.Attribute.Enumeration<
+      [
+        'full',
+        'split-2-horizontal',
+        'split-2-vertical',
+        'split-3',
+        'split-4',
+        'custom',
+      ]
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'full'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::layout.layout'
+    > &
+      Schema.Attribute.Private;
+    metadata: Schema.Attribute.JSON;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    playlists: Schema.Attribute.Relation<'oneToMany', 'api::playlist.playlist'>;
+    publishedAt: Schema.Attribute.DateTime;
+    thumbnail: Schema.Attribute.Media<'images'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    zones: Schema.Attribute.JSON & Schema.Attribute.Required;
+  };
+}
+
+export interface ApiMediaContentMediaContent
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'media_contents';
+  info: {
+    description: 'Content items for digital signage including images, videos, text, and embeds';
+    displayName: 'Media Content';
+    pluralName: 'media-contents';
+    singularName: 'media-content';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    activeFrom: Schema.Attribute.DateTime;
+    activeTo: Schema.Attribute.DateTime;
+    contentType: Schema.Attribute.Enumeration<
+      ['image', 'video', 'text', 'embed']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'text'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    duration: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<10>;
+    embedUrl: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::media-content.media-content'
+    > &
+      Schema.Attribute.Private;
+    metadata: Schema.Attribute.JSON;
+    priority: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    publishedAt: Schema.Attribute.DateTime;
+    status: Schema.Attribute.Enumeration<['active', 'draft', 'archived']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'draft'>;
+    textContent: Schema.Attribute.RichText;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    video: Schema.Attribute.Media<'videos'>;
+  };
+}
+
+export interface ApiPlaylistPlaylist extends Struct.CollectionTypeSchema {
+  collectionName: 'playlists';
+  info: {
+    description: 'Content playlists for digital signage';
+    displayName: 'Playlist';
+    pluralName: 'playlists';
+    singularName: 'playlist';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    layout: Schema.Attribute.Relation<'manyToOne', 'api::layout.layout'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::playlist.playlist'
+    > &
+      Schema.Attribute.Private;
+    loop: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    metadata: Schema.Attribute.JSON;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    playlistItems: Schema.Attribute.Component<'playlist.playlist-item', true> &
+      Schema.Attribute.Required;
+    priority: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    publishedAt: Schema.Attribute.DateTime;
+    schedule: Schema.Attribute.Component<'schedule.schedule', false> &
+      Schema.Attribute.Required;
+    screens: Schema.Attribute.Relation<'manyToMany', 'api::screen.screen'>;
+    status: Schema.Attribute.Enumeration<['active', 'inactive', 'scheduled']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'inactive'>;
+    transitionEffect: Schema.Attribute.Enumeration<
+      ['none', 'fade', 'slide', 'zoom']
+    > &
+      Schema.Attribute.DefaultTo<'fade'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiScreenScreen extends Struct.CollectionTypeSchema {
+  collectionName: 'screens';
+  info: {
+    description: 'Digital signage display units';
+    displayName: 'Screen';
+    pluralName: 'screens';
+    singularName: 'screen';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    customer: Schema.Attribute.Relation<'manyToOne', 'api::customer.customer'> &
+      Schema.Attribute.Required;
+    description: Schema.Attribute.Text;
+    deviceId: Schema.Attribute.String & Schema.Attribute.Unique;
+    lastPing: Schema.Attribute.DateTime;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::screen.screen'
+    > &
+      Schema.Attribute.Private;
+    location: Schema.Attribute.String & Schema.Attribute.Required;
+    metadata: Schema.Attribute.JSON;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    orientation: Schema.Attribute.Enumeration<['portrait', 'landscape']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'landscape'>;
+    playlists: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::playlist.playlist'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    resolution: Schema.Attribute.Component<'display.resolution', false> &
+      Schema.Attribute.Required;
+    status: Schema.Attribute.Enumeration<
+      ['active', 'inactive', 'maintenance']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'active'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1044,10 +1337,16 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::about.about': ApiAboutAbout;
+      'api::app-role.app-role': ApiAppRoleAppRole;
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
+      'api::customer.customer': ApiCustomerCustomer;
       'api::global.global': ApiGlobalGlobal;
+      'api::layout.layout': ApiLayoutLayout;
+      'api::media-content.media-content': ApiMediaContentMediaContent;
+      'api::playlist.playlist': ApiPlaylistPlaylist;
+      'api::screen.screen': ApiScreenScreen;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
